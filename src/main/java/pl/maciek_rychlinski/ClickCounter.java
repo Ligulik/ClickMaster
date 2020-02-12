@@ -1,3 +1,6 @@
+// Projekt ClickMaster
+// Autor: Maciej Rychliński
+
 package pl.maciek_rychlinski;
 
 import javax.swing.*;
