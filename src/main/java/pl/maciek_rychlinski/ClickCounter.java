@@ -112,6 +112,13 @@ public class ClickCounter extends JFrame {
         add(info);
         add(gauge);
 
+        ImageIcon imageIcon = new ImageIcon("F:\\ProgramyJAVA\\ClickMaster\\src\\main\\resources\\fronczewski.jpg");
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+
+        add(new JLabel(imageIcon));
+
         // Umieszczenie okna na srodku:
         setLocationRelativeTo(null);
 
