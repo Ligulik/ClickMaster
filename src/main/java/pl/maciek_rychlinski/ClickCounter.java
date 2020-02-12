@@ -9,11 +9,11 @@ import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ClickCounter extends JFrame implements ActionListener {
+public class ClickCounter extends JFrame {
     JButton counter;
     JTextArea gauge, countdown;
     int ile = 0;
-    int time = 10;
+    int time = 3;
     boolean isItEnd = true;
 
 //TIMER @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -23,18 +23,27 @@ public class ClickCounter extends JFrame implements ActionListener {
 
         @Override
         public void run() {
-            countdown.setText(String.valueOf(time));
-            time--;
-            if (time == 0) {
-                isItEnd = false;
-                timer.cancel();
-                JOptionPane.showMessageDialog(null, "Brawo, twĂłj wynik to: " + ile);
+            if(time>-1) {
+                countdown.setText(String.valueOf(time));
+                time--;
+                if (time == -1) {
+                    isItEnd = true;
+                    JOptionPane.showMessageDialog(null, "Brawo, twój wynik to: " + ile);
+                    countdown.setText("Koniec");
+                    counter.setBackground(Color.green);
+                    counter.setText("Reset & Start");
+
+                }
             }
         }
     };
 
     public void start() {
-        timer.schedule(task, 1000, 1000);
+        try {
+            timer.schedule(task, 1000, 1000);
+        } catch (java.lang.IllegalStateException exc2) {
+
+        }
     }
 
 
@@ -53,61 +62,64 @@ public class ClickCounter extends JFrame implements ActionListener {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                // Zliczaerka klikniÄ™Ä‡:
-                if (e.getClickCount() <= 1 && isItEnd) {
-                    ile += e.getClickCount();
+
+                // RESET
+                if(e.getClickCount()==1&&isItEnd==true){
+
+                    time = 3;
+                    isItEnd =false;
+                    ile = 0;
                     gauge.setText("" + ile);
+                    start();
+                    counter.setBackground(null);
+                    counter.setText("Klikaj");
                 }
-                if (e.getClickCount() >= 1 && isItEnd) {
+
+
+
+                if (e.getClickCount() >= 1 && isItEnd==false) {
                     ile += 1;
                     gauge.setText("" + ile);
                 }
             }
 
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                try {
-                    start();
-                } catch (java.lang.IllegalStateException exc) {
-                    // Ignoruj
-                }
-            }
         };
 
 
 // Komponenty:
-        counter = new JButton("Tu klikaj");
-        gauge = new JTextArea("");
+        counter = new JButton("Start");
+        gauge = new JTextArea(1, 5);
         countdown = new JTextArea(1, 5);
         JLabel info = new JLabel("Twój aktualny wynik:");
         JLabel timeToEnd = new JLabel("Pozostało:");
 
 // Konfiguracja komponentów:
         counter.setPreferredSize(new Dimension(300, 100));
+        counter.setBackground(Color.green);
         gauge.setEditable(false);
         countdown.setEditable(false);
 
 // Sluchacze:
         counter.addMouseListener(mouseMonitor);
 
+
 // Dodania do ramki:
         JOptionPane.showMessageDialog(null,
-                "Ten program mierzy Twoją prędkość klikania\n By rozpocząć, wciśnij ok, oraz najedź na przycisk \"Tu klikaj\"");
+                "Ten program mierzy Twoją prędkość klikania\n By rozpocząć, wciśnij \"Start\"");
         add(timeToEnd);
         add(countdown);
         add(counter);
         add(info);
         add(gauge);
 
+        // Umieszczenie okna na srodku:
+        setLocationRelativeTo(null);
+
         setVisible(true);
 
     }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 
 
     // MAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
