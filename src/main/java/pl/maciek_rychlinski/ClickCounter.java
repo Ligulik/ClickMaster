@@ -3,6 +3,9 @@
 
 package pl.maciek_rychlinski;
 
+
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,11 +13,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ClickCounter extends JFrame {
+
     JButton counter;
     JTextArea gauge, countdown;
     int ile = 0;
     int time = 3;
     boolean isItEnd = true;
+
+
+    private void setLookAndFeel(){
+        try {
+            UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatDarkLaf() );
+        } catch( Exception ex ) {
+            System.err.println( "Failed to initialize LaF" );
+        }
+    }
 
 //TIMER @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -50,11 +63,15 @@ public class ClickCounter extends JFrame {
 //KONSTRUKTOR @@@@@@@@@@@@@@@@@@@@@@@
 
     public ClickCounter() {
+
         super("Licznik kliknięć");
+        setLookAndFeel();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(320, 300);
+        setSize(340, 300);
         FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
-        setLayout(flow);
+        JPanel mainPanel=new JPanel();
+        mainPanel.setLayout(flow);
+
 
 
 // KLASA wewnętrzna implemetująca słuchacza myszy:
@@ -95,7 +112,6 @@ public class ClickCounter extends JFrame {
 
 // Konfiguracja komponentów:
         counter.setPreferredSize(new Dimension(300, 100));
-        counter.setBackground(Color.green);
         gauge.setEditable(false);
         countdown.setEditable(false);
 
@@ -106,19 +122,19 @@ public class ClickCounter extends JFrame {
 // Dodania do ramki:
         JOptionPane.showMessageDialog(null,
                 "Ten program mierzy Twoją prędkość klikania\n By rozpocząć, wciśnij \"Start\"");
-        add(timeToEnd);
-        add(countdown);
-        add(counter);
-        add(info);
-        add(gauge);
+        mainPanel.add(timeToEnd);
+        mainPanel.add(countdown);
+        mainPanel.add(counter);
+        mainPanel.add(info);
+        mainPanel.add(gauge);
 
         ImageIcon imageIcon = new ImageIcon("F:\\ProgramyJAVA\\ClickMaster\\src\\main\\resources\\fronczewski.jpg");
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
 
-        add(new JLabel(imageIcon));
-
+        mainPanel.add(new JLabel(imageIcon));
+        add(mainPanel);
         // Umieszczenie okna na srodku:
         setLocationRelativeTo(null);
 
