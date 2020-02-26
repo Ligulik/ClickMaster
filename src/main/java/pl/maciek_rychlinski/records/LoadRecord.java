@@ -5,15 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
-import pl.maciek_rychlinski.records.SaveRecord;
+
 
 public class LoadRecord {
 
     public String playerName;
     public String playerScore;
     public String dateOfGame;
-    public int line=0;
-    public LoadRecord() throws FileNotFoundException, IOException {
+
+    public LoadRecord() throws IOException {
 
         FileReader fileReader=new FileReader("rekord.txt");
         BufferedReader bufferedReader=new BufferedReader(fileReader);
@@ -29,8 +29,6 @@ public class LoadRecord {
             System.out.println(""+playerName+" : "+playerScore+" : "+dateOfGame);
         }
 
-
-        //StringTokenizer stringTokenizer =new StringTokenizer(bufferedReader.readLine(),"@");
 
 
     }
