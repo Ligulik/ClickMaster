@@ -67,7 +67,7 @@ public class ClickCounter extends JFrame {
         super("Licznik kliknięć");
         setLookAndFeel();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(340, 300);
+        setSize(340, 600);
         FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
         JPanel mainPanel=new JPanel();
         mainPanel.setLayout(flow);
@@ -109,6 +109,7 @@ public class ClickCounter extends JFrame {
         countdown = new JTextArea(1, 5);
         JLabel info = new JLabel("Twój aktualny wynik:");
         JLabel timeToEnd = new JLabel("Pozostało:");
+        JLabel records=new JLabel("Twoje rekordy:");
 
 // Konfiguracja komponentów:
         counter.setPreferredSize(new Dimension(300, 100));
@@ -134,6 +135,7 @@ public class ClickCounter extends JFrame {
         imageIcon = new ImageIcon(newimg);
 
         mainPanel.add(new JLabel(imageIcon));
+        mainPanel.add(records);
         add(mainPanel);
         // Umieszczenie okna na srodku:
         setLocationRelativeTo(null);
