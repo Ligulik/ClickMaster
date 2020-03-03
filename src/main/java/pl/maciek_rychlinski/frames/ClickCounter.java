@@ -1,31 +1,41 @@
 // Projekt ClickMaster
 // Autor: Maciej Rychliński
 
-package pl.maciek_rychlinski;
+package pl.maciek_rychlinski.frames;
 
 
-
+import pl.maciek_rychlinski.records.DataAndTime;
+import pl.maciek_rychlinski.records.Record;
+import pl.maciek_rychlinski.view.Menu;
+import pl.maciek_rychlinski.view.RecordsPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ClickCounter extends JFrame {
 
+
     JButton counter;
     JTextArea gauge, countdown;
     int ile = 0;
     int time = 3;
+
     boolean isItEnd = true;
+    Record record;
+    RecordsPanel recordsPanel;
+    DataAndTime dataAndTime=new DataAndTime();
 
 
-    private void setLookAndFeel(){
+    private void setLookAndFeel() {
         try {
-            UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatDarkLaf() );
-        } catch( Exception ex ) {
-            System.err.println( "Failed to initialize LaF" );
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
         }
     }
 
@@ -36,15 +46,32 @@ public class ClickCounter extends JFrame {
 
         @Override
         public void run() {
-            if(time>-1) {
+            if (time > -1) {
                 countdown.setText(String.valueOf(time));
                 time--;
                 if (time == -1) {
-                    isItEnd = true;
-                    JOptionPane.showMessageDialog(null, "Brawo, twój wynik to: " + ile);
+
+
                     countdown.setText("Koniec");
-                    counter.setBackground(Color.green);
-                    counter.setText("Reset & Start");
+                    counter.setText("Koniec");
+                    if(NewPlayer.playerName==null){
+                       NewPlayer.playerName="No Name";
+                        record =new Record(NewPlayer.playerName,dataAndTime.addDate(),dataAndTime.addTime(),ile);
+                    }else{
+                        record =new Record(NewPlayer.playerName,dataAndTime.addDate(),dataAndTime.addTime(),ile);
+                    }
+                    recordsPanel.addRecord(record);
+                    if(recordsPanel.infoAboutNewRecord()){
+                        JOptionPane.showMessageDialog(null, "Brawo, Nowy rekord: " + ile);
+                    }
+                    repaint();
+                    try{
+                    Thread.sleep(2000);}catch (InterruptedException e){
+                        e.getMessage();
+                    }
+                    isItEnd = true;
+                    counter.setText("Click for Reset & Start");
+
 
                 }
             }
@@ -67,11 +94,15 @@ public class ClickCounter extends JFrame {
         super("Licznik kliknięć");
         setLookAndFeel();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(340, 600);
-        FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
-        JPanel mainPanel=new JPanel();
-        mainPanel.setLayout(flow);
+        setSize(550, 600);
+        setResizable(false);
 
+        // Umieszczenie okna na srodku:
+        setLocationRelativeTo(null);
+
+        FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(flow);
 
 
 // KLASA wewnętrzna implemetująca słuchacza myszy:
@@ -81,10 +112,11 @@ public class ClickCounter extends JFrame {
             public void mousePressed(MouseEvent e) {
 
                 // RESET
-                if(e.getClickCount()==1&&isItEnd==true){
+                if (e.getClickCount() == 1 && isItEnd == true ) {
+
 
                     time = 3;
-                    isItEnd =false;
+                    isItEnd = false;
                     ile = 0;
                     gauge.setText("" + ile);
                     start();
@@ -93,8 +125,7 @@ public class ClickCounter extends JFrame {
                 }
 
 
-
-                if (e.getClickCount() >= 1 && isItEnd==false) {
+                if (e.getClickCount() >= 1 && isItEnd == false && !counter.getText().equals("Koniec")) {
                     ile += 1;
                     gauge.setText("" + ile);
                 }
@@ -109,7 +140,6 @@ public class ClickCounter extends JFrame {
         countdown = new JTextArea(1, 5);
         JLabel info = new JLabel("Twój aktualny wynik:");
         JLabel timeToEnd = new JLabel("Pozostało:");
-        JLabel records=new JLabel("Twoje rekordy:");
 
 // Konfiguracja komponentów:
         counter.setPreferredSize(new Dimension(300, 100));
@@ -118,6 +148,10 @@ public class ClickCounter extends JFrame {
 
 // Sluchacze:
         counter.addMouseListener(mouseMonitor);
+
+// Layouts:
+        GridLayout gridLayout = new GridLayout(2, 1);
+        setLayout(gridLayout);
 
 
 // Dodania do ramki:
@@ -131,20 +165,26 @@ public class ClickCounter extends JFrame {
 
         ImageIcon imageIcon = new ImageIcon("F:\\ProgramyJAVA\\ClickMaster\\src\\main\\resources\\fronczewski.jpg");
         Image image = imageIcon.getImage();
-        Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg = image.getScaledInstance(120, 120, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
 
+
         mainPanel.add(new JLabel(imageIcon));
-        mainPanel.add(records);
         add(mainPanel);
-        // Umieszczenie okna na srodku:
-        setLocationRelativeTo(null);
+
+        // Rekordy
+        recordsPanel=new RecordsPanel();
+        add(recordsPanel);
+
+        // Menu:
+        setJMenuBar(new Menu());
+
+
+
 
         setVisible(true);
 
     }
-
-
 
 
     // MAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
