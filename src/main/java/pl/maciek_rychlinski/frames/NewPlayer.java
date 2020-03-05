@@ -41,6 +41,11 @@ public class NewPlayer extends JFrame implements ActionListener{
         dispose();
     }
 
+
+    public static void setNoName(String noName){
+        playerName=noName;
+    }
+
     KeyAdapter keyAdapter=new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {

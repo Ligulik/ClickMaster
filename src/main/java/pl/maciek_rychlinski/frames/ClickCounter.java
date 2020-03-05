@@ -55,11 +55,9 @@ public class ClickCounter extends JFrame {
                     countdown.setText("Koniec");
                     counter.setText("Koniec");
                     if(NewPlayer.playerName==null){
-                       NewPlayer.playerName="No Name";
-                        record =new Record(NewPlayer.playerName,dataAndTime.addDate(),dataAndTime.addTime(),ile);
-                    }else{
-                        record =new Record(NewPlayer.playerName,dataAndTime.addDate(),dataAndTime.addTime(),ile);
+                       NewPlayer.setNoName("No Name");
                     }
+                    record =new Record(NewPlayer.playerName,dataAndTime.addDate(),dataAndTime.addTime(),ile);
                     recordsPanel.addRecord(record);
                     if(recordsPanel.infoAboutNewRecord()){
                         JOptionPane.showMessageDialog(null, "Brawo, Nowy rekord: " + ile);
