@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SaveChooser extends JFileChooser {
 
     public SaveChooser() {
-        super(new File("F:\\"));
+        super(new File("C:\\"));
         setDialogTitle("Zapisz swoje rekordy");
         setFileFilter(new FileTypeFilter(".txt", "Text File"));
         int returnValue = showSaveDialog(null);
