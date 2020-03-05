@@ -3,25 +3,67 @@ package pl.maciek_rychlinski.view;
 import pl.maciek_rychlinski.frames.NewPlayer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
-public class Menu extends JMenuBar implements ActionListener {
+public class Menu extends JMenuBar{
 
-    JMenu mainMenu;
-    JMenuItem gracz;
+    JMenu choosePlayer;
+    JMenuItem player;
+
+    JMenu records;
+    JMenuItem save;
+    JMenuItem load;
 
     public Menu(){
         super();
-        mainMenu=new JMenu("Wybór gracza");
-        gracz=new JMenuItem("Nowy");
-        mainMenu.add(gracz);
-        add(mainMenu);
-        gracz.addActionListener(this);
+
+        // Wybór gracza:
+        choosePlayer=new JMenu("Wybór gracza");
+        player=new JMenuItem();
+// Dodania
+        choosePlayer.add(player);
+        add(choosePlayer);
+// Akcje
+        newPlayer.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+        player.setAction(newPlayer);
+
+        // Zapisywanie i wczytywanie rekordów:
+        records=new JMenu("Rekordy");
+        save=new JMenuItem();
+        load=new JMenuItem();
+// Dodania
+        records.add(save);
+        records.add(load);
+        add(records);
+//Akcje
+        saveRecord.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK));
+        save.setAction(saveRecord);
+        loadRecord.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_L,KeyEvent.CTRL_DOWN_MASK));
+        load.setAction(loadRecord);
+
+
     }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new NewPlayer();
-    }
+    Action newPlayer=new AbstractAction("Nowy   ") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new NewPlayer();
+        }
+    };
+
+    Action saveRecord=new AbstractAction("Zapisz   ") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    };
+
+    Action loadRecord=new AbstractAction("Wczytaj   ") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    };
+
 }
