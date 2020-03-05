@@ -20,6 +20,7 @@ public class RecordsPanel extends JPanel {
     int j = 1;
     boolean newRecord;
 
+
     static List<Record> lista = new ArrayList<>();
 
     public RecordsPanel() {
@@ -87,10 +88,25 @@ public class RecordsPanel extends JPanel {
             textFieldsArray[i + 4].setText(String.valueOf(lista.get(j).getScore()));
             j++;
         }
+
     }
 
         public boolean infoAboutNewRecord(){
             return newRecord;
         }
 
+        public String getListAsString(){
+        String finalResult="";
+
+        for(int i=0;i<=lista.size()-1;i++){
+            finalResult=finalResult+
+                    lista.get(i).getPlayerName()+"@"+
+                    lista.get(i).getDateOfPlay()+"@"+
+                    lista.get(i).getClockOFPlay()+"@"+
+                    lista.get(i).getScore()+"@";
+        }
+
+
+            return finalResult;
+    }
 }

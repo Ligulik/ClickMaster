@@ -55,7 +55,7 @@ public class Menu extends JMenuBar{
     Action saveRecord=new AbstractAction("Zapisz   ") {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+           new SaveChooser();
         }
     };
 
