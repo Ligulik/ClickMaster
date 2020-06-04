@@ -19,9 +19,9 @@ public class SaveChooser extends JFileChooser {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = getSelectedFile();
             try {
-                FileWriter fileWriter = new FileWriter(selectedFile.getPath() + ".txt",true);
-                BufferedWriter bufferedWriter=new BufferedWriter(fileWriter);
-                RecordsPanel recordsPanel=new RecordsPanel();
+                FileWriter fileWriter = new FileWriter(selectedFile.getPath() + ".txt", true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                RecordsPanel recordsPanel = new RecordsPanel();
                 bufferedWriter.write(recordsPanel.getListAsString());
                 bufferedWriter.close();
             } catch (IOException e) {

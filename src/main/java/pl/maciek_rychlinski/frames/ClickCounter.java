@@ -12,8 +12,6 @@ import pl.maciek_rychlinski.view.RecordsPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,9 +24,12 @@ public class ClickCounter extends JFrame {
     int time = 3;
 
     boolean isItEnd = true;
+    boolean isLoad=true;
     Record record;
-    RecordsPanel recordsPanel;
+    public RecordsPanel recordsPanel;
+
     DataAndTime dataAndTime=new DataAndTime();
+
 
 
     private void setLookAndFeel() {
@@ -62,7 +63,6 @@ public class ClickCounter extends JFrame {
                     if(recordsPanel.infoAboutNewRecord()){
                         JOptionPane.showMessageDialog(null, "Brawo, Nowy rekord: " + ile);
                     }
-                    repaint();
                     try{
                     Thread.sleep(2000);}catch (InterruptedException e){
                         e.getMessage();
@@ -76,12 +76,15 @@ public class ClickCounter extends JFrame {
         }
     };
 
-    public void start() {
-        try {
-            timer.schedule(task, 1000, 1000);
-        } catch (java.lang.IllegalStateException exc2) {
 
-        }
+
+    public void start() {
+
+            try {
+                timer.schedule(task, 1000, 1000);
+            } catch (java.lang.IllegalStateException exc2) {
+
+            }
     }
 
 
@@ -175,7 +178,7 @@ public class ClickCounter extends JFrame {
         add(recordsPanel);
 
         // Menu:
-        setJMenuBar(new Menu());
+        setJMenuBar(new Menu(this));
 
 
 

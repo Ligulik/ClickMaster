@@ -69,10 +69,10 @@ public class RecordsPanel extends JPanel {
 
         lista.add(record);
         lista.sort(Comparator.comparingInt(Record::getScore).reversed());
-        if(lista.size()>1 && record.getScore()>lista.get(1).getScore()){
-            newRecord=true;
-        }else{
-            newRecord=false;
+        if (lista.size() > 1 && record.getScore() > lista.get(1).getScore()) {
+            newRecord = true;
+        } else {
+            newRecord = false;
         }
 
         if (lista.size() > 5) {
@@ -87,26 +87,40 @@ public class RecordsPanel extends JPanel {
             textFieldsArray[i + 3].setText(lista.get(j).getClockOFPlay());
             textFieldsArray[i + 4].setText(String.valueOf(lista.get(j).getScore()));
             j++;
-        }
 
+        }
     }
 
-        public boolean infoAboutNewRecord(){
-            return newRecord;
+    public boolean check(Record record) {
+
+        boolean consist = false;
+
+        for (Record pozycja : lista) {
+            if (pozycja.getDateOfPlay().equals(record.getDateOfPlay()) && pozycja.getClockOFPlay().equals(record.getClockOFPlay())) {
+                consist = true;
+            }
         }
-
-        public String getListAsString(){
-        String finalResult="";
-
-        for(int i=0;i<=lista.size()-1;i++){
-            finalResult=finalResult+
-                    lista.get(i).getPlayerName()+"@"+
-                    lista.get(i).getDateOfPlay()+"@"+
-                    lista.get(i).getClockOFPlay()+"@"+
-                    lista.get(i).getScore()+"@";
-        }
-
-
-            return finalResult;
+        return consist;
     }
+
+    public boolean infoAboutNewRecord() {
+        return newRecord;
+    }
+
+    public String getListAsString() {
+        String finalResult = "";
+
+        for (int i = 0; i <= lista.size() - 1; i++) {
+            finalResult = finalResult +
+                    lista.get(i).getPlayerName() + "@" +
+                    lista.get(i).getDateOfPlay() + "@" +
+                    lista.get(i).getClockOFPlay() + "@" +
+                    lista.get(i).getScore() + "@" +
+                    "!";
+        }
+
+
+        return finalResult;
+    }
+
 }

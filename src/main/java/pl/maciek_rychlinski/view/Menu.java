@@ -1,11 +1,13 @@
 package pl.maciek_rychlinski.view;
 
+import pl.maciek_rychlinski.frames.ClickCounter;
 import pl.maciek_rychlinski.frames.NewPlayer;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public class Menu extends JMenuBar{
+public class Menu extends JMenuBar {
 
     JMenu choosePlayer;
     JMenuItem player;
@@ -13,56 +15,59 @@ public class Menu extends JMenuBar{
     JMenu records;
     JMenuItem save;
     JMenuItem load;
+    ClickCounter clickCounter;
 
-    public Menu(){
+    public Menu(ClickCounter clickCounter) {
         super();
 
+        this.clickCounter = clickCounter;
+
         // Wybór gracza:
-        choosePlayer=new JMenu("Wybór gracza");
-        player=new JMenuItem();
+        choosePlayer = new JMenu("Wybór gracza");
+        player = new JMenuItem();
 // Dodania
         choosePlayer.add(player);
         add(choosePlayer);
 // Akcje
-        newPlayer.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+        newPlayer.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
         player.setAction(newPlayer);
 
         // Zapisywanie i wczytywanie rekordów:
-        records=new JMenu("Rekordy");
-        save=new JMenuItem();
-        load=new JMenuItem();
+        records = new JMenu("Rekordy");
+        save = new JMenuItem();
+        load = new JMenuItem();
 // Dodania
         records.add(save);
         records.add(load);
         add(records);
 //Akcje
-        saveRecord.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK));
+        saveRecord.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
         save.setAction(saveRecord);
-        loadRecord.putValue(Action.ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_L,KeyEvent.CTRL_DOWN_MASK));
+        loadRecord.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
         load.setAction(loadRecord);
 
 
     }
 
 
-    Action newPlayer=new AbstractAction("Nowy   ") {
+    Action newPlayer = new AbstractAction("Nowy   ") {
         @Override
         public void actionPerformed(ActionEvent e) {
             new NewPlayer();
         }
     };
 
-    Action saveRecord=new AbstractAction("Zapisz   ") {
+    Action saveRecord = new AbstractAction("Zapisz   ") {
         @Override
         public void actionPerformed(ActionEvent e) {
-           new SaveChooser();
+            new SaveChooser();
         }
     };
 
-    Action loadRecord=new AbstractAction("Wczytaj   ") {
+    Action loadRecord = new AbstractAction("Wczytaj   ") {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            new LoadChooser(clickCounter.recordsPanel);
         }
     };
 
