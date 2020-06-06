@@ -4,8 +4,6 @@ package pl.maciek_rychlinski.view;
  * Okno wczytywania rekordow z pliku textowego:
  */
 
-
-import pl.maciek_rychlinski.frames.ClickCounter;
 import pl.maciek_rychlinski.records.Record;
 
 import javax.swing.*;
@@ -16,7 +14,6 @@ import java.io.*;
 public class LoadChooser extends JFileChooser {
 
 
-    ClickCounter clickCounter;
     RecordsPanel recordsPanel;
 
 
@@ -25,7 +22,7 @@ public class LoadChooser extends JFileChooser {
 
         // Okno wczytywania:
 
-        super(new File(("C:\\")));
+        super(System.getProperty("user.home"));
 
         this.recordsPanel = recordsPanel;
 
@@ -53,6 +50,8 @@ public class LoadChooser extends JFileChooser {
                     }
 
                 }
+
+                JOptionPane.showMessageDialog(null, "Rekordy zostały wczytane");
 
 
             } catch (IOException e) {

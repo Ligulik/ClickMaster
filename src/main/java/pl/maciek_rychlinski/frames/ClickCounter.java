@@ -24,12 +24,10 @@ public class ClickCounter extends JFrame {
     int time = 3;
 
     boolean isItEnd = true;
-    boolean isLoad=true;
     Record record;
     public RecordsPanel recordsPanel;
 
-    DataAndTime dataAndTime=new DataAndTime();
-
+    DataAndTime dataAndTime = new DataAndTime();
 
 
     private void setLookAndFeel() {
@@ -55,16 +53,17 @@ public class ClickCounter extends JFrame {
 
                     countdown.setText("Koniec");
                     counter.setText("Koniec");
-                    if(NewPlayer.playerName==null){
-                       NewPlayer.setNoName("No Name");
+                    if (NewPlayer.playerName == null) {
+                        NewPlayer.setNoName("No Name");
                     }
-                    record =new Record(NewPlayer.playerName,dataAndTime.addDate(),dataAndTime.addTime(),ile);
+                    record = new Record(NewPlayer.playerName, dataAndTime.addDate(), dataAndTime.addTime(), ile);
                     recordsPanel.addRecord(record);
-                    if(recordsPanel.infoAboutNewRecord()){
+                    if (recordsPanel.infoAboutNewRecord()) {
                         JOptionPane.showMessageDialog(null, "Brawo, Nowy rekord: " + ile);
                     }
-                    try{
-                    Thread.sleep(2000);}catch (InterruptedException e){
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
                         e.getMessage();
                     }
                     isItEnd = true;
@@ -77,14 +76,13 @@ public class ClickCounter extends JFrame {
     };
 
 
-
     public void start() {
 
-            try {
-                timer.schedule(task, 1000, 1000);
-            } catch (java.lang.IllegalStateException exc2) {
+        try {
+            timer.schedule(task, 1000, 1000);
+        } catch (java.lang.IllegalStateException exc2) {
 
-            }
+        }
     }
 
 
@@ -113,7 +111,7 @@ public class ClickCounter extends JFrame {
             public void mousePressed(MouseEvent e) {
 
                 // RESET
-                if (e.getClickCount() == 1 && isItEnd == true ) {
+                if (e.getClickCount() == 1 && isItEnd == true) {
 
 
                     time = 3;
@@ -174,13 +172,11 @@ public class ClickCounter extends JFrame {
         add(mainPanel);
 
         // Rekordy
-        recordsPanel=new RecordsPanel();
+        recordsPanel = new RecordsPanel();
         add(recordsPanel);
 
         // Menu:
         setJMenuBar(new Menu(this));
-
-
 
 
         setVisible(true);

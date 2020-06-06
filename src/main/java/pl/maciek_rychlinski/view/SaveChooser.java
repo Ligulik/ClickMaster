@@ -10,8 +10,10 @@ import java.io.IOException;
 
 public class SaveChooser extends JFileChooser {
 
+
+
     public SaveChooser() {
-        super(new File("C:\\"));
+        super(new File(System.getProperty("user.home")));
         setDialogTitle("Zapisz swoje rekordy");
         setFileFilter(new FileTypeFilter(".txt", "Text File"));
         int returnValue = showSaveDialog(null);
@@ -24,6 +26,7 @@ public class SaveChooser extends JFileChooser {
                 RecordsPanel recordsPanel = new RecordsPanel();
                 bufferedWriter.write(recordsPanel.getListAsString());
                 bufferedWriter.close();
+                JOptionPane.showMessageDialog(null,"Rekordy zapisano pomyślnie!");
             } catch (IOException e) {
                 e.getMessage();
             }
